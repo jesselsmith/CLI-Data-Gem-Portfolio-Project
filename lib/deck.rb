@@ -27,5 +27,10 @@ class Deck
     @@all
   end
 
+  def add_card
+
+  end
+  
+
 
 end
