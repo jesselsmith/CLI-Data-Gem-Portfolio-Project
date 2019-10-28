@@ -18,13 +18,14 @@ class Deck
   end
 
   def self.create(name:, featured_cards:, colors:, meta_percent:, online_price:, paper_price:, deck_url:)
-    self.new(name: name, featured_cards: featured_cards, colors: colors, meta_percent: meta_percent, online_price: online_price, paper_price: paper_price, deck_url: deck_url)
-    @@all << self
+    new_deck = self.new(name: name, featured_cards: featured_cards, colors: colors, meta_percent: meta_percent, online_price: online_price, paper_price: paper_price, deck_url: deck_url)
+    @@all << new_deck
+    new_deck
   end
 
   def self.all
     @@all
   end
-  
+
 
 end

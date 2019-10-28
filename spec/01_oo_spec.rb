@@ -11,22 +11,29 @@ describe 'Card' do
       expect(new_card.card_url).to eq('price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
     end
   end
+
+  describe '.create' do
+    it 'saves a card to the @@all class variable array' do
+      new_card = Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG', card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+      expect(Card.all).to eq([new_card])
+    end
+  end
 end
 
 
 describe 'Deck' do
   let(:oko) do
-    Card.new(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
+    Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
              card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
   end
 
   let(:nissa) do
-    Card.new(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
+    Card.create(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
              card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper')
   end
 
   let(:krasis) do
-    Card.new(name: 'Hydroid Krasis', mana_cost: 'XUG',
+    Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
              card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
   end
 

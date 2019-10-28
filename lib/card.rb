@@ -14,8 +14,9 @@ class Card
   end
 
   def self.create(name:, mana_cost:, card_url:)
-    self.new(name: name, mana_cost: mana_cost, card_url: card_url)
-    @@all << self
+    new_card = self.new(name: name, mana_cost: mana_cost, card_url: card_url)
+    @@all << new_card
+    new_card
   end
 
   # takes in a name string and converts it to a symbol
