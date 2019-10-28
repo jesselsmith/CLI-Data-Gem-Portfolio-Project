@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Card
-  attr_accessor :name, :mana_cost, :card_url, :daily_change, :weekly_change,
+  attr_accessor :name, :mana_cost, :card_url, :online_price, :paper_price, :daily_change, :weekly_change,
                 :highest_price, :lowest_price, :sets
   attr_reader :decks
 
