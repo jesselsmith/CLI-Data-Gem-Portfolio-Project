@@ -39,9 +39,9 @@ describe 'Scraper' do
     end
 
     it 'correctly collects the online and paper prices' do
-      expect(scrape_results[:online_prices][2]).to eq('301')
+      expect(scrape_results[:online_prices][2]).to eq('301tix')
 
-      expect(scrape_results[:paper_prices][5]).to eq('1658')
+      expect(scrape_results[:paper_prices][5]).to eq('$1,658')
     end
   end
 end

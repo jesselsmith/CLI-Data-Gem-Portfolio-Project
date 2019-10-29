@@ -4,6 +4,10 @@ require 'nokogiri'
 class Scraper
   BASE_URL = "https://www.mtggoldfish.com"
 
+  def self.text_of_html_elements(html_node)
+    html_node.map { |element| element.text.gsub(/[[:space:]]+/, '') }
+  end
+
   def self.scrape_top_12_decks(url_add_on) 
     doc = Nokogiri::HTML(URI.open(BASE_URL + url_add_on))
 
@@ -19,15 +23,20 @@ class Scraper
     featured_cards = decks.css(".archetype-tile-description ul").map do |list|
       list.css("li").map(&:text)
     end.first(12)
-    
-    meta_percents = decks.css(".table-condensed.stats .col-freq").map { |element| element.text.strip }.first(12)
 
+    meta_percents = text_of_html_elements(decks.css(".table-condensed.stats .col-freq")).first(12)
+
+    online_prices = text_of_html_elements(decks.css(".stats .deck-price-online")).first(12)
+
+    paper_prices = text_of_html_elements(decks.css(".stats .deck-price-paper")).first(12)
     {
       names: names,
       urls: urls,
       colors: colors,
       featured_cards: featured_cards,
-      meta_percents: meta_percents
+      meta_percents: meta_percents,
+      online_prices: online_prices,
+      paper_prices: paper_prices
     }
 
 
