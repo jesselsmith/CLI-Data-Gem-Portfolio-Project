@@ -12,7 +12,7 @@ require_relative 'spec_helper'
     it 'gets them in the right quantities' do
       deck_object = completed_deck
       expect(deck_object.cards[:engineered_explosives][:quantity]).to eq(3)
-      expect(deck_object.cards[:selesneya_sanctuary][:quantity]).to eq(1)
+      expect(deck_object.cards[:selesnya_sanctuary][:quantity]).to eq(1)
     end
 
     it 'builds card objects for each card' do

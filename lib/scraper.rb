@@ -50,7 +50,7 @@ class Scraper
 
     card_names = paper_tab.css(".deck-col-card a").map(&:text)
 
-    card_quantities = text_of_html_elements(paper_tab.css(".deck-col-qty"))
+    card_quantities = paper_tab.css(".deck-col-qty").map { |element| element.text.gsub(/[[:space:]]+/, '').to_i }
 
     card_urls = paper_tab.css(".deck-col-card a").map { |e| e.attribute("href").value }
 
