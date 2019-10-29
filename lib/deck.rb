@@ -60,9 +60,9 @@ class Deck
   end
 
   def print_deck
-    puts deck.name
-    @cards.each do |card_reference|
-      puts "#{card_reference[:quantity]} #{card_reference[:card].name}"
+    puts name
+    @cards.each do |card|
+      puts "#{card[1][:quantity]} #{card[1][:card].name}"
     end
   end
 end
