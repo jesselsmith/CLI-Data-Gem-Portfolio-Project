@@ -3,17 +3,20 @@ require_relative 'spec_helper'
 describe 'Card' do
   let(:oko) do
     Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
-             card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+             card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper',
+            image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
   
   let(:nissa) do
     Card.create(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
-             card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper')
+             card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper',
+            image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
   
   let(:krasis) do
     Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
-             card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
+             card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper',
+            image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
   
   let(:deck_initilization_hash) do
@@ -28,11 +31,16 @@ describe 'Card' do
     }
   end
 
-  let(:titan) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
+  let(:titan) do
+    Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper', 
+    image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
+    end
+  
 
   describe '#initialize' do
     it 'accepts a name, mana_cost, and card_url' do
-      new_card = Card.new(name: 'Oko, Thief of Crowns', mana_cost: '1UG', card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+      new_card = Card.new(name: 'Oko, Thief of Crowns', mana_cost: '1UG', card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper',
+      image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
       expect(new_card.name).to eq('Oko, Thief of Crowns')
       expect(new_card.mana_cost).to eq('1UG')
       expect(new_card.card_url).to eq('price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
@@ -41,7 +49,8 @@ describe 'Card' do
 
   describe '.create' do
     it 'saves a card to the @@all class variable array' do
-      new_card = Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG', card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+      new_card = Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG', card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper',
+      image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
       expect(Card.all).to eq([new_card])
     end
   end
@@ -61,20 +70,25 @@ end
 describe 'Deck' do
   let(:oko) do
     Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
-             card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+             card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper',
+            image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
   
   let(:nissa) do
     Card.create(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
-             card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper')
+             card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper',
+            image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
   
   let(:krasis) do
     Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
-             card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
+             card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper', image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
   end
 
-  let(:titan) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
+  let(:titan) do
+    Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper', 
+    image_url: 'https://cdn1.mtggoldfish.com/images/gf/Primeval%2BTitan%2B%255BM12%255D.jpg')
+    end
   
   let(:deck_initilization_hash) do
     {

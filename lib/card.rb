@@ -7,20 +7,21 @@ require_relative './concerns/symbolizable'
 class Card
   extend Concerns::Findable
   include Concerns::Symbolizable
-  attr_accessor :name, :mana_cost, :card_url, :online_price, :paper_price, :daily_change, :weekly_change,
+  attr_accessor :name, :mana_cost, :card_url, :image_url, :online_price, :paper_price, :daily_change, :weekly_change,
                 :highest_price, :lowest_price, :sets
   attr_reader :decks
 
   @@all = []
 
-  def initialize(name:, mana_cost:, card_url:)
+  def initialize(name:, mana_cost:, card_url:, image_url:)
     @name = name
     @mana_cost = mana_cost
     @card_url = card_url
+    @image_url = image_url
   end
 
-  def self.create(name:, mana_cost:, card_url:)
-    new_card = self.new(name: name, mana_cost: mana_cost, card_url: card_url)
+  def self.create(name:, mana_cost:, card_url:, image_url:)
+    new_card = self.new(name: name, mana_cost: mana_cost, card_url: card_url, image_url: image_url)
     @@all << new_card
     new_card
   end
@@ -57,5 +58,9 @@ class Card
     @highest_price = highest_price
     @lowest_price = lowest_price
     @sets = sets
+  end
+
+  def self.find_card_by_name_or_create(card_attribute_hash)
+    find_by_name(card_attribute_hash[:name]) || create(card_attribute_hash)
   end
 end
