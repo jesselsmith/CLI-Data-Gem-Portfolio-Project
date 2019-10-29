@@ -44,4 +44,28 @@ describe 'Scraper' do
       expect(scrape_results[5].paper_price).to eq('$1,658')
     end
   end
+
+
+  describe '.scrape_decklist' do
+    let(completed_deck){Scraper.scrape_decklist("/archetype/modern-amulet-titan-88330#paper")}
+    it 'scrapes all the cards in the deck' do
+      expect(completed_deck.cards.key?(:once_upon_a_time)).to eq (true)
+      expect(completed_deck.cards.key?(:engineered_explosives)).to eq(true)
+      expect(completed_deck.cards.key?(:disdainful_stroke)).to eq(true)
+    end
+
+    it 'gets them in the right quantities' do
+      expect(completed_deck.cards[:engineered_explosives][:quantity]).to eq(3)
+      expect(completed_deck.cards[:selesneya_sanctuary][:quantity]).to eq(1)
+    end
+
+    it 'builds card objects for each card' do
+      expect(completed_deck.cards[:primeval_titan][:card].is_a? Card).to eq(true)
+    end
+
+    it 'does not build card objects that have already been built' do
+      expect(Cards.all.group_by { |e| e }.find { |_k, v| v.size > 1 }.nil?).to eq(false)
+    end
+  end
+
 end
