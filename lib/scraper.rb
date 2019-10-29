@@ -29,18 +29,14 @@ class Scraper
     online_prices = text_of_html_elements(decks.css(".stats .deck-price-online")).first(12)
 
     paper_prices = text_of_html_elements(decks.css(".stats .deck-price-paper")).first(12)
-    {
-      names: names,
-      urls: urls,
-      colors: colors,
-      featured_cards: featured_cards,
-      meta_percents: meta_percents,
-      online_prices: online_prices,
-      paper_prices: paper_prices
-    }
 
-
-
+    names.map.with_index do |name, index|
+      Deck.create(name: name, deck_url: urls[index], colors: colors[index],
+                  featured_cards: featured_cards[index],
+                  meta_percent: meta_percents[index],
+                  online_price: online_prices[index],
+                  paper_price: paper_prices[index])
+    end
   end
 
 

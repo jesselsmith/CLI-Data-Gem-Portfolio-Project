@@ -6,7 +6,7 @@ describe 'Scraper' do
     let(:scrape_results){ Scraper.scrape_top_12_decks(modern_url) }
 
     it 'correctly collects all the names of the top 12 decks' do
-      expect(scrape_results[:names]).to eq([
+      expect(scrape_results.map(&:name)).to eq([
         "Amulet Titan",
         "Burn",
         "Eldrazi Tron",
@@ -23,25 +23,25 @@ describe 'Scraper' do
     end
     
     it 'correctly collects the urls' do
-      expect(scrape_results[:urls].first).to eq("/archetype/modern-amulet-titan-88330#paper")
+      expect(scrape_results.first.deck_url).to eq("/archetype/modern-amulet-titan-88330#paper")
     end
 
     it 'correctly collects the colors' do
-      expect(scrape_results[:colors][3]).to eq("G")
+      expect(scrape_results[3].colors).to eq("G")
     end
 
     it 'correctly collects the featured cards' do
-      expect(scrape_results[:featured_cards][7]).to eq(['Mox Opal', 'Urza, Lord High Artificer', 'Mishra\'s Bauble'])
+      expect(scrape_results[7].featured_cards).to eq(['Mox Opal', 'Urza, Lord High Artificer', 'Mishra\'s Bauble'])
     end
 
     it 'correctly collects the meta percent' do
-      expect(scrape_results[:meta_percents][11]).to eq('2.14%')
+      expect(scrape_results[11].meta_percent).to eq('2.14%')
     end
 
     it 'correctly collects the online and paper prices' do
-      expect(scrape_results[:online_prices][2]).to eq('301tix')
+      expect(scrape_results[2].online_price).to eq('301tix')
 
-      expect(scrape_results[:paper_prices][5]).to eq('$1,658')
+      expect(scrape_results[5].paper_price).to eq('$1,658')
     end
   end
 end
