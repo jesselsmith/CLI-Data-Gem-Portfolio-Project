@@ -28,7 +28,7 @@ describe 'Card' do
     }
   end
 
-  let(:card) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
+  let(:titan) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
 
   describe '#initialize' do
     it 'accepts a name, mana_cost, and card_url' do
@@ -46,12 +46,12 @@ describe 'Card' do
     end
   end
 
-  describe ".add_deck" do
+  describe "#add_deck" do
     it 'adds a deck to the @decks hash and adds the card to the deck if its not already there' do
       deck =  Deck.new(deck_initilization_hash)
-      card.add_deck(deck)
-      expect(card.decks[:amulet_titan]).to eq(deck)
-      expect(deck.card? card).to eq(true) 
+      titan.add_deck(deck)
+      expect(titan.decks[:amulet_titan]).to eq(deck)
+      expect(deck.card? titan).to eq(true) 
     end
   end
   
@@ -73,6 +73,8 @@ describe 'Deck' do
     Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
              card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
   end
+
+  let(:titan) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
   
   let(:deck_initilization_hash) do
     {
@@ -106,6 +108,35 @@ describe 'Deck' do
     it 'saves a deck to the @@all class variable array' do
       new_deck = Deck.create(deck_initilization_hash)
       expect(Deck.all.first).to eq(new_deck)
+    end
+  end
+
+  describe '#add_card' do
+    it 'adds the card to the deck, and adds the deck to the card' do
+      new_deck = Deck.new(deck_initilization_hash)
+      new_deck.add_card(titan, 4)
+      expect(new_deck.card?(titan)).to eq(true)
+      expect(new_deck.cards[:primeval_titan][:card]).to eq(titan)
+      expect(new_deck.cards[:primeval_titan][:quantity]).to eq(4)
+      expect(titan.decks.key?(:amulet_titan)).to eq(true)
+    end
+
+    it 'increases the quantity of the existing hash entry rather than adding another' do
+      new_deck = Deck.new(deck_initilization_hash)
+      new_deck.add_card(titan, 2)
+      new_deck.add_card(titan, 1)
+      expect(new_deck.cards[:primeval_titan][:quantity]).to eq(3)
+    end
+
+
+    it 'checks to make sure this won\'t take the quantity over 4' do
+      new_deck = Deck.new(deck_initilization_hash)
+      new_deck.add_card(titan, 4)
+      new_deck.add_card(titan, 2)
+      expect(new_deck.cards[:primeval_titan][:quantity]).to eq(4)
+      new_deck.add_card(oko, 1)
+      new_deck.add_card(oko, 4)
+      expect(new_deck.cards[:oko_thief_of_crowns][:quantity]).to eq(1)
     end
   end
 end
