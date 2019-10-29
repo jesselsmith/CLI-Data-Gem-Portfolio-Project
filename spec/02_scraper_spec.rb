@@ -35,7 +35,7 @@ describe 'Scraper' do
     end
 
     it 'correctly collects the meta percent' do
-      expect(scrape_results[:meta_percents][11]).to eq('2.14')
+      expect(scrape_results[:meta_percents][11]).to eq('2.14%')
     end
 
     it 'correctly collects the online and paper prices' do

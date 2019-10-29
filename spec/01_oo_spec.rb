@@ -81,25 +81,25 @@ describe 'Deck' do
       name: 'Amulet Titan',
       colors: 'UG',
       featured_cards: ['Azusa, Lost but Seeking', 'Amulet of Vigor', 'Summoner\'s Pact'],
-      meta_percent: 5.75,
-      online_price: 291,
-      paper_price: 757,
+      meta_percent: '5.75%',
+      online_price: '291',
+      paper_price: '757',
       deck_url: 'archetype/modern-amulet-titan-88330#paper'
     }
   end
 
   describe '#initialize' do
     it 'accepts a name, colors, featured_cards, meta_percent, online_price, paper_price, and deck_url' do
-      deck = Deck.new(name: 'UG Walkers', colors: 'UG', 
+      deck = Deck.new(name: 'UG Walkers', colors: 'UG',
                       featured_cards: ['Oko, Thief of Crowns', 'Nissa, Who Shakes the World', 'Hydroid Krasis'], 
-                      meta_percent: 17.2, online_price: 600.11,
-                      paper_price: 875.24, deck_url: 'archetype/standard-ug-walkers-101386#paper')
+                      meta_percent: '17.2%', online_price: '600.11',
+                      paper_price: '875.24', deck_url: 'archetype/standard-ug-walkers-101386#paper')
       expect(deck.name).to eq('UG Walkers')
       expect(deck.colors).to eq('UG')
       expect(deck.featured_cards).to eq(['Oko, Thief of Crowns', 'Nissa, Who Shakes the World', 'Hydroid Krasis'])
-      expect(deck.meta_percent).to eq(17.2)
-      expect(deck.online_price).to eq(600.11)
-      expect(deck.paper_price).to eq(875.24)
+      expect(deck.meta_percent).to eq('17.2%')
+      expect(deck.online_price).to eq('600.11')
+      expect(deck.paper_price).to eq('875.24')
       expect(deck.deck_url).to eq('archetype/standard-ug-walkers-101386#paper')
     end
   end

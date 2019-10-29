@@ -19,13 +19,15 @@ class Scraper
     featured_cards = decks.css(".archetype-tile-description ul").map do |list|
       list.css("li").map(&:text)
     end.first(12)
-
+    
+    meta_percents = decks.css(".table-condensed.stats .col-freq").map { |element| element.text.strip }.first(12)
 
     {
       names: names,
       urls: urls,
       colors: colors,
-      featured_cards: featured_cards
+      featured_cards: featured_cards,
+      meta_percents: meta_percents
     }
 
 
