@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../config/environment'
+require_relative './concerns/findable'
+require_relative './concerns/symbolizable'
+
 class Card
+  extend Concerns::Findable
+  include Concerns::Symbolizable
   attr_accessor :name, :mana_cost, :card_url, :online_price, :paper_price, :daily_change, :weekly_change,
                 :highest_price, :lowest_price, :sets
   attr_reader :decks
@@ -19,12 +25,6 @@ class Card
     new_card
   end
 
-  # takes in a name string and converts it to a symbol
-  def self.symbolize(name_string)
-    # replaces all the spaces with underscores, downcases before converting
-    name_string.gsub(/\s+/, '_').downcase.to_sym
-  end
-
   def add_deck(deck_object)
     name_symbol = symbolize(deck_object.name)
     if @decks.is_a? Hash
@@ -34,7 +34,7 @@ class Card
         name_symbol => deck_object
       }
     end
-    deck_object.add_card(self) unless deck_object.has_card? self
+    deck_object.add_card(self) unless deck_object.card? self
   end
 
   def self.all

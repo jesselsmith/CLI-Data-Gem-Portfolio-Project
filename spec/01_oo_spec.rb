@@ -1,6 +1,33 @@
 require_relative 'spec_helper'
 
 describe 'Card' do
+  let(:oko) do
+    Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
+             card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
+  end
+  
+  let(:nissa) do
+    Card.create(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
+             card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper')
+  end
+  
+  let(:krasis) do
+    Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
+             card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
+  end
+  
+  let(:deck_initilization_hash) do
+    {
+      name: 'Amulet Titan',
+      colors: 'UG',
+      featured_cards: ['Azusa, Lost but Seeking', 'Amulet of Vigor', 'Summoner\'s Pact'],
+      meta_percent: 5.75,
+      online_price: 291,
+      paper_price: 757,
+      deck_url: 'archetype/modern-amulet-titan-88330#paper'
+    }
+  end
+
   let(:card) { Card.new(name: 'Primeval Titan', mana_cost: '4GG', card_url: 'price/Magic+2012/Primeval+Titan#paper') }
 
   describe '#initialize' do
@@ -18,6 +45,16 @@ describe 'Card' do
       expect(Card.all).to eq([new_card])
     end
   end
+
+  describe ".add_deck" do
+    it 'adds a deck to the @decks hash and adds the card to the deck if its not already there' do
+      deck =  Deck.new(deck_initilization_hash)
+      card.add_deck(deck)
+      expect(card.decks[:amulet_titan]).to eq(deck)
+      expect(deck.card? card).to eq(true) 
+    end
+  end
+  
 end
 
 
@@ -26,17 +63,17 @@ describe 'Deck' do
     Card.create(name: 'Oko, Thief of Crowns', mana_cost: '1UG',
              card_url: 'price/Throne+of+Eldraine/Oko+Thief+of+Crowns#paper')
   end
-
+  
   let(:nissa) do
     Card.create(name: 'Nissa, Who Shakes the World', mana_cost: '3GG',
              card_url: 'price/War+of+the+Spark/Nissa+Who+Shakes+the+World#paper')
   end
-
+  
   let(:krasis) do
     Card.create(name: 'Hydroid Krasis', mana_cost: 'XUG',
              card_url: 'price/Promo+Pack+Throne+of+Eldraine/Hydroid+Krasis#paper')
   end
-
+  
   let(:deck_initilization_hash) do
     {
       name: 'Amulet Titan',
@@ -48,7 +85,6 @@ describe 'Deck' do
       deck_url: 'archetype/modern-amulet-titan-88330#paper'
     }
   end
-
 
   describe '#initialize' do
     it 'accepts a name, colors, featured_cards, meta_percent, online_price, paper_price, and deck_url' do
