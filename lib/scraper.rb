@@ -17,8 +17,10 @@ class Scraper
     end.first(12)
 
     featured_cards = decks.css(".archetype-tile-description ul").map do |list|
-      list.children.map(&:text)
-    end
+      list.css("li").map(&:text)
+    end.first(12)
+
+
     {
       names: names,
       urls: urls,
