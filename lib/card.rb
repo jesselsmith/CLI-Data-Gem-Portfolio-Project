@@ -48,4 +48,14 @@ class Card
       @sets = [set_name_string]
     end
   end
+
+  def add_more_info_with_hash(online_price:, paper_price:, daily_change:, weekly_change:, highest_price:, lowest_price:, sets:)
+    @online_price = online_price
+    @paper_price = paper_price
+    @daily_change = daily_change
+    @weekly_change = weekly_change
+    @highest_price = highest_price
+    @lowest_price = lowest_price
+    @sets = sets
+  end
 end
