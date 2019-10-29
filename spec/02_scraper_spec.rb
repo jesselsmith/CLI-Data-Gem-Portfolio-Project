@@ -1,10 +1,12 @@
 require_relative 'spec_helper'
 
 describe 'Scraper' do
-  let(:modern_url){"metagame/modern#paper"}
+  let(:modern_url){"/metagame/modern#paper"}
   describe '.scrape_top_12_decks' do
     it 'correctly collects all the names of the top 12 decks' do
-      expect(Scraper.scrape_top_12_decks(modern_url)).to eq([
+      scrape_results = Scraper.scrape_top_12_decks(modern_url)
+
+      expect(scrape_results[:names]).to eq([
         "Amulet Titan",
         "Burn",
         "Eldrazi Tron",
@@ -13,11 +15,13 @@ describe 'Scraper' do
         "Jund",
         "Grixis Death's Shadow",
         "Four-Color Whirza",
-        "Azorius Stoneblade",
+        "Azorious Stoneblade",
         "Dredge",
         "Titanshift",
         "Humans"
          ])
+
+         expect(scrape_results[:urls].first).to eq("/archetype/modern-amulet-titan-88330#paper")
     end
 
   end
