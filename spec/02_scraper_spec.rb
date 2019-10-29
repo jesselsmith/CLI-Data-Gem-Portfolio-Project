@@ -20,11 +20,28 @@ describe 'Scraper' do
         "Titanshift",
         "Humans"
          ])
-
-         expect(scrape_results[:urls].first).to eq("/archetype/modern-amulet-titan-88330#paper")
-
-         expect(scrape_results[:colors][3]).to eq("G")
+    end
+    
+    it 'correctly collects the urls' do
+      expect(scrape_results[:urls].first).to eq("/archetype/modern-amulet-titan-88330#paper")
     end
 
+    it 'correctly collects the colors' do
+      expect(scrape_results[:colors][3]).to eq("G")
+    end
+
+    it 'correctly collects the featured cards' do
+      expect(scrape_results[:featured_cards][7]).to eq(%w[Mox Opal Urza, Lord High Artificer Mishra's Bauble])
+    end
+
+    it 'correctly collects the meta percent' do
+      expect(scrape_results[:meta_percents][11]).to eq('2.14')
+    end
+
+    it 'correctly collects the online and paper prices' do
+      expect(scrape_results[:online_prices][2]).to eq('301')
+
+      expect(scrape_results[:paper_prices][5]).to eq('1658')
+    end
   end
 end

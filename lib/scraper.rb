@@ -18,8 +18,11 @@ class Scraper
     {
       names: names,
       urls: urls,
-      colors: colors
+      colors: colors,
+      featured_cards: featured_cards
     }
+
+
 
   end
 
