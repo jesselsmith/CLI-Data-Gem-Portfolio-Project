@@ -3,9 +3,9 @@ require_relative 'spec_helper'
 describe 'Scraper' do
   let(:modern_url){"/metagame/modern#paper"}
   describe '.scrape_top_12_decks' do
-    it 'correctly collects all the names of the top 12 decks' do
-      scrape_results = Scraper.scrape_top_12_decks(modern_url)
+    let(:scrape_results){ Scraper.scrape_top_12_decks(modern_url) }
 
+    it 'correctly collects all the names of the top 12 decks' do
       expect(scrape_results[:names]).to eq([
         "Amulet Titan",
         "Burn",
@@ -31,7 +31,7 @@ describe 'Scraper' do
     end
 
     it 'correctly collects the featured cards' do
-      expect(scrape_results[:featured_cards][7]).to eq(%w[Mox Opal Urza, Lord High Artificer Mishra's Bauble])
+      expect(scrape_results[:featured_cards][7]).to eq(['Mox Opal', 'Urza, Lord High Artificer', 'Mishra\'s Bauble'])
     end
 
     it 'correctly collects the meta percent' do

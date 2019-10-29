@@ -15,6 +15,10 @@ class Scraper
       color_letters = container.css(".common-manaCost-manaSymbol").map{ |element| element.attribute("alt").value }.join
       color_letters == '' ? 'colorless' : color_letters.upcase
     end.first(12)
+
+    featured_cards = decks.css(".archetype-tile-description ul").map do |list|
+      list.children.map(&:text)
+    end
     {
       names: names,
       urls: urls,
