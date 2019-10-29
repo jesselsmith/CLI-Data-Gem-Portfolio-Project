@@ -15,13 +15,15 @@ describe 'Scraper' do
         "Jund",
         "Grixis Death's Shadow",
         "Four-Color Whirza",
-        "Azorious Stoneblade",
+        "Azorius Control",
         "Dredge",
         "Titanshift",
         "Humans"
          ])
 
          expect(scrape_results[:urls].first).to eq("/archetype/modern-amulet-titan-88330#paper")
+
+         expect(scrape_results[:colors][3]).to eq("G")
     end
 
   end

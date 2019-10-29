@@ -11,10 +11,14 @@ class Scraper
 
     names = decks.css(".deck-price-paper a").map(&:text).first(12)
     urls = decks.css(".deck-price-paper a").map { |element| element.attribute("href").value }.first(12)
-    
+    colors = decks.css(".manacost-container").map do |container|
+      color_letters = container.css(".common-manaCost-manaSymbol").map{ |element| element.attribute("alt").value }.join
+      color_letters == '' ? 'colorless' : color_letters.upcase
+    end.first(12)
     {
       names: names,
-      urls: urls
+      urls: urls,
+      colors: colors
     }
 
   end
