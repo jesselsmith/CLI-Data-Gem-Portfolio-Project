@@ -1,5 +1,6 @@
 require_relative 'spec_helper'
 
+describe 'Scraper' do
   describe '.scrape_decklist' do
     let(:completed_deck) { Scraper.scrape_decklist(Scraper.scrape_top_12_decks("/metagame/modern#paper")[0]) }
     it 'scrapes all the cards in the deck' do
@@ -18,9 +19,11 @@ require_relative 'spec_helper'
     it 'builds card objects for each card' do
       deck_object = completed_deck
       expect(deck_object.cards[:primeval_titan][:card].is_a?(Card)).to eq(true)
+      expect(deck_object.cards[:primeval_titan][:card].mana_cost).to eq("4GG")
     end
 
     it 'does not build card objects that have already been built' do
       expect(Card.all.group_by { |e| e }.find { |_k, v| v.size > 1 }.nil?).to eq(true)
     end
   end
+end
