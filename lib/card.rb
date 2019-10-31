@@ -63,4 +63,26 @@ class Card
   def self.find_card_by_name_or_create(card_attribute_hash)
     find_by_name(card_attribute_hash[:name]) || create(card_attribute_hash)
   end
+
+  def name_in_color
+    colors = @mana_cost.scan(/W|U|B|R|G/)
+    if colors.size > 1
+      @name.colorize(:light_yellow)
+    elsif colors.size == 0
+      @name
+    else
+      case colors[0]
+      when 'W'
+        @name.colorize(:light_white)
+      when 'U'
+        @name.colorize(:blue)
+      when 'B'
+        @name.colorize(:light_black)
+      when 'R'
+        @name.colorize(:red)
+      when 'G'
+        @name.colorize(:green)
+      end
+    end
+  end
 end

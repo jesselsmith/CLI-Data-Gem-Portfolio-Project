@@ -4,6 +4,8 @@ require_relative '../config/environment'
 require_relative './concerns/findable'
 require_relative './concerns/symbolizable'
 
+require 'colorize'
+
 class Deck
   extend Concerns::Findable
   include Concerns::Symbolizable
@@ -65,9 +67,9 @@ class Deck
   end
 
   def print_deck
-    puts name
+    puts name.colorize(:magenta)
     @cards.each do |card|
-      puts "#{card[1][:quantity]} #{card[1][:card].name}"
+      puts "#{card[1][:quantity]} #{card[1][:card].name_in_color}"
     end
   end
 end

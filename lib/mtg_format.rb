@@ -15,9 +15,6 @@ class MtgFormat
     "/metagame/#{format_name_string}#paper"
   end
 
-
-  hey there what is up
-
   def initialize(name:, format_url: url_from_format_name(name), decks_array:)
     @name = name
     @format_url = format_url
@@ -37,9 +34,12 @@ class MtgFormat
 
   def display_format
     @decks.each.with_index(1) do |deck, i|
-      puts "#{i}. #{deck.name} | Colors: #{deck.colors}"
+      puts "#{i.to_s.colorize(:yellow)}. #{deck.name.colorize(:magenta)}" +
+           " | Colors: #{deck.colors}"
       puts "  -Featured Cards: #{deck.featured_cards.join(' | ')}"
-      puts "  -Metagame Percentage: #{deck.meta_percent} | Paper Price: #{deck.paper_price} | Online Price: #{deck.online_price}"
+      puts "  -Metagame Percentage: #{deck.meta_percent.colorize(:cyan)} | " +
+           "Paper Price: #{deck.paper_price.colorize(:cyan)} | " +
+           "Online Price: #{deck.online_price.colorize(:cyan)}"
     end
   end
 

@@ -3,17 +3,20 @@ class CliController
   MTG_FORMAT_LIST = %w[standard modern pioneer pauper legacy vintage].freeze
 
   def self.greeting
-    puts 'Welcome to M:tG Metagame Scraper!'
+    puts 'Welcome to ' + 'M:tG Metagame Scraper'.colorize(:light_blue) + '!'
   end
 
   def self.list_format_selection
     puts 'Select an option from the list below:'
     MTG_FORMAT_LIST.each.with_index(1) do |mtg_format, i|
-      puts "#{i}. Show me the top 12 #{mtg_format.capitalize} decks."
+      puts "#{i.to_s.colorize(:yellow)}. Show me the top 12 " +
+           "#{mtg_format.capitalize.colorize(:light_green)} decks."
     end
     user_input = ''
     until valid_format_selection_choice?(user_input)
-      puts "What would you like to do? [type 1-#{MTG_FORMAT_LIST.size} or 'exit' to exit]:"
+      puts 'What would you like to do? [enter ' +
+           "1-#{MTG_FORMAT_LIST.size}".colorize(:yellow) +
+           " or '#{'exit'.colorize(:yellow)}' to exit]:"
       user_input = gets.strip.downcase
     end
     user_input
@@ -36,10 +39,9 @@ class CliController
   end
 
   def self.goodbye
-    puts 'Thanks for using M:tG Metagame Scraper! Goodbye!'
+    puts "Thanks for using #{'M:tG Metagame Scraper'.colorize(:light_blue)}!" +
+         'Goodbye!'
   end
-
-
 
   def self.start
     greeting
@@ -53,7 +55,7 @@ class CliController
       existing_format
     else
       format_url = MtgFormat.url_from_format_name(mtg_format_string)
-      
+
       decks = Scraper.scrape_top_12_decks(format_url)
 
       MtgFormat.create(name: mtg_format_string, decks_array: decks)
@@ -66,12 +68,15 @@ class CliController
   end
 
   def self.list_deck_selection(mtg_format)
-    puts "The top 12 decks of #{mtg_format.name} are:"
+    puts 'The top 12 decks of ' +
+         "#{mtg_format.name.capitalize.colorize(:light_green)} are:"
     mtg_format.display_format
     user_input = ''
     until valid_deck_selection_choice?(user_input)
-      puts "Enter the number (1-12) of the deck you'd like to see,"
-      puts "'list formats' to see another format, or 'exit' to exit. What would you like to do?:"
+      puts "Enter the number (#{'1-12'.colorize(:yellow)}) of the deck you'd" +
+           " like to see, '#{'list formats'.colorize(:yellow)}'"
+      puts "to see another format, or '#{'exit'.colorize(:yellow)}' to exit." +
+           ' What would you like to do?:'
       user_input = gets.strip.downcase
     end
     user_input
@@ -103,8 +108,10 @@ class CliController
     user_input = ''
 
     until valid_bottom_level_choice?(user_input) 
-      puts "Enter 'list decks' to see another deck, 'list formats' to see another format, or 'exit' to exit."
-      puts "What would you like to do?"
+      puts "Enter '#{'list decks'.colorize(:yellow)}' to see another deck, " +
+           "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
+           "'#{'exit'.colorize(:yellow)}' to exit."
+      puts 'What would you like to do?'
       user_input = gets.strip.downcase
     end
     user_input

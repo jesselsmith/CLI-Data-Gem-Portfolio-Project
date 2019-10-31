@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
+require 'colorize'
 
 class Scraper
   BASE_URL = 'https://www.mtggoldfish.com'
@@ -10,7 +11,23 @@ class Scraper
 
   def self.mana_extractor(html_node)
     html_node.map do |container|
-      container.css('.common-manaCost-manaSymbol').map{ |element| element.attribute('alt').value }.join.upcase
+      container.css('.common-manaCost-manaSymbol').map do |element| 
+        mana_symbol = element.attribute('alt').value.upcase
+        case mana_symbol
+        when 'W'
+          mana_symbol.colorize(:light_white)
+        when 'U'
+          mana_symbol.colorize(:blue)
+        when 'B'
+          mana_symbol.colorize(:light_black)
+        when 'R'
+          mana_symbol.colorize(:red)
+        when 'G'
+          mana_symbol.colorize(:green)
+        else
+          mana_symbol
+        end
+      end.join
     end
   end
 
@@ -25,7 +42,7 @@ class Scraper
     colors = mana_extractor(decks.css('.manacost-container')).first(12)
 
     featured_cards = decks.css('.archetype-tile-description ul').map do |list|
-      list.css('li').map(&:text)
+      list.css('li').map{ |list_item| list_item.text.colorize(:light_red) }
     end.first(12)
 
     meta_percents = text_of_html_elements(decks.css('.table-condensed.stats .col-freq')).first(12)
