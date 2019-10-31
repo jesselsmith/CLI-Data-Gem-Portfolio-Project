@@ -65,7 +65,7 @@ class Card
   end
 
   def name_in_color
-    colors = @mana_cost.scan(/W|U|B|R|G/)
+    colors = @mana_cost.scan(/W|U|B|R|G/).uniq
     if colors.size > 1
       @name.colorize(:light_yellow)
     elsif colors.size == 0

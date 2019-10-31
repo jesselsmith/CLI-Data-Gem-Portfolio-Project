@@ -40,7 +40,7 @@ class CliController
 
   def self.goodbye
     puts "Thanks for using #{'M:tG Metagame Scraper'.colorize(:light_blue)}!" +
-         'Goodbye!'
+         ' Goodbye!'
   end
 
   def self.start
