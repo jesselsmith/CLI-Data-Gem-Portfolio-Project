@@ -9,9 +9,14 @@ class Deck
   include Concerns::Symbolizable
   attr_accessor :name, :featured_cards, :colors, :meta_percent, :online_price,
                 :paper_price, :deck_url
-  attr_reader :cards
+  attr_reader :cards, :mtg_format
 
   @@all =  []
+
+  def mtg_format=(mtg_format)
+    @mtg_format = mtg_format
+    mtg_format.add_deck(self) unless mtg_format.decks.include?(self)
+  end
 
   def initialize(name:, featured_cards:, colors:, meta_percent:, online_price:, paper_price:, deck_url:)
     @name = name

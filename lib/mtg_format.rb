@@ -6,7 +6,8 @@ require_relative './concerns/findable'
 class MtgFormat
   extend Concerns::Findable
 
-  attr_accessor :name, :format_url, :decks
+  attr_accessor :name, :format_url
+  attr_reader :decks
 
   @@all = []
 
@@ -18,7 +19,8 @@ class MtgFormat
   def initialize(name:, format_url: url_from_format_name(name), decks_array:)
     @name = name
     @format_url = format_url
-    @decks = decks_array
+    @decks = []
+    decks_array.each{ |deck| add_deck(deck) }
   end
 
   def self.create(name:, format_url: url_from_format_name(name), decks_array:)
@@ -37,5 +39,10 @@ class MtgFormat
       puts "  -Featured Cards: #{deck.featured_cards.join(' | ')}"
       puts "  -Metagame Percentage: #{deck.meta_percent} | Paper Price: #{deck.paper_price} | Online Price: #{deck.online_price}"
     end
+  end
+
+  def add_deck(deck)
+    @decks << deck unless @decks.include?(deck)
+    deck.mtg_format = self unless deck.mtg_format == self
   end
 end

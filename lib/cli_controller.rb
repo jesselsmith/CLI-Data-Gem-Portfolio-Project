@@ -95,5 +95,37 @@ class CliController
     deck_selection_execution(mtg_format, user_choice)
   end
 
+  def self.valid_bottom_level_choice?(user_input_string)
+    ['list decks', 'list formats', 'exit'].include?(user_input_string)
+  end
 
+  def self.prompt_and_get_bottom_level_input
+    user_input = ''
+
+    until valid_bottom_level_choice?(user_input) 
+      puts "Enter 'list decks' to see another deck, 'list formats' to see another format, or 'exit' to exit."
+      puts "What would you like to do?"
+      user_input = gets.strip.downcase
+    end
+    user_input
+  end
+
+  def self.execute_bottom_level_choice(user_input, mtg_format)
+    case user_input
+    when 'list decks'
+      deck_selection_execution(mtg_format, list_deck_selection(mtg_format))
+    when 'list formats'
+      format_selection_execution(self.list_format_selection)
+    when 'exit'
+      goodbye
+    end
+  end
+
+  def self.choose_decklist(deck_object)
+    Scraper.scrape_decklist(deck_object) if deck_object.cards.nil?
+
+    deck_object.print_deck
+
+    execute_bottom_level_choice(prompt_and_get_bottom_level_input, deck_object.mtg_format)
+  end
 end
