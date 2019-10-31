@@ -16,6 +16,8 @@ class MtgFormat
   end
 
 
+  hey there what is up
+
   def initialize(name:, format_url: url_from_format_name(name), decks_array:)
     @name = name
     @format_url = format_url
