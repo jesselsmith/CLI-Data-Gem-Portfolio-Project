@@ -102,7 +102,7 @@ class Card
     puts "Image URL: #{@image_url}"
     puts "Paper Price: $#{@paper_price.colorize(:cyan)} | Online Price: #{@online_price.colorize(:cyan)}tix"
     puts "Daily Change: #{price_changes_colorization(@daily_change)} | Weekly Change: #{price_changes_colorization(@weekly_change)}"
-    puts "Highest Price: #{@highest_price.colorize(:cyan)} | Lowest Price: #{@lowest_price.colorize(:cyan)}"
+    puts "Highest Price: $#{@highest_price.colorize(:cyan)} | Lowest Price: $#{@lowest_price.colorize(:cyan)}"
   end
 
 end

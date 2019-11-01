@@ -113,8 +113,9 @@ class CliController
     user_input = ''
 
     until valid_card_selection_choice?(user_input, deck) 
-      puts "Enter a card's name to get more info on the card, " +
-           "'#{'list decks'.colorize(:yellow)}' to see another deck, " +
+      puts "Enter a #{'card name'.colorize(:yellow)} to get more info " +
+           "on the card, '#{'list decks'.colorize(:yellow)}' to see " + 
+           "another deck,\n" +
            "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
            "'#{'exit'.colorize(:yellow)}' to exit."
       puts 'What would you like to do?:'
@@ -156,7 +157,7 @@ class CliController
   def self.bottom_level_prompt(deck)
     puts "Enter '#{'back'.colorize(:yellow)} to go back to the " +
          "#{deck.name.colorize(:magenta)} decklist, " +
-         "'#{'list decks'.colorize(:yellow)}' to see another deck, " +
+         "'#{'list decks'.colorize(:yellow)}' to see another deck,\n" +
          "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
          "'#{'exit'.colorize(:yellow)}' to exit."
     puts 'What would you like to do?:'
