@@ -93,11 +93,17 @@ class Scraper
   
     prices =  doc.css(".price-box-price")
 
-    hash_to_add_to_card = {}
-    hash_to_add_to_card[:image_url] = doc.css(".price-card-image-image").attribute("src").value
-    hash_to_add_to_card[:online_price] = prices[0].text
-    hash_to_add_to_card[:paper_price] = prices[1].text
-    hash_to_add_to_card
+    price_variation = doc.css('.price-card-statistics-paper .price-card-statistics-table2 .text-right').map(&:text)
+
+    card.add_more_info_with_hash(
+      online_price: prices[0].text,
+      paper_price: prices[1].text,
+      daily_change: price_variation[0],
+      weekly_change: price_variation[1],
+      highest_price: price_variation[2],
+      lowest_price: price_variation[3],
+      sets: doc.css('.table-condensed.other-printings .name a').map { |e| e.attribute("title").value }.uniq
+    )
+    card
   end
-  
 end
