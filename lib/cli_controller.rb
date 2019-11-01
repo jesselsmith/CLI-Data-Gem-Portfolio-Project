@@ -114,7 +114,7 @@ class CliController
 
     until valid_card_selection_choice?(user_input, deck) 
       puts "Enter a card's name to get more info on the card, " +
-           "#{'list decks'.colorize(:yellow)}' to see another deck, " +
+           "'#{'list decks'.colorize(:yellow)}' to see another deck, " +
            "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
            "'#{'exit'.colorize(:yellow)}' to exit."
       puts 'What would you like to do?:'
@@ -125,7 +125,7 @@ class CliController
 
   def self.execute_card_selection_choice(user_input, deck)
     if deck.how_many(user_input).positive?
-      choose_card(deck.cards[deck.symbolize(user_input)], deck)
+      choose_card(deck.cards[deck.symbolize(user_input)][:card], deck)
     elsif user_input == 'list decks'
       deck_selection_execution(deck.mtg_format, list_deck_selection(deck.mtg_format))
     elsif user_input == 'list formats'
@@ -153,10 +153,10 @@ class CliController
     execute_bottom_level_choice(user_input, deck)
   end
 
-  def bottom_level_prompt(deck)
+  def self.bottom_level_prompt(deck)
     puts "Enter '#{'back'.colorize(:yellow)} to go back to the " +
          "#{deck.name.colorize(:magenta)} decklist, " +
-         "#{'list decks'.colorize(:yellow)}' to see another deck, " +
+         "'#{'list decks'.colorize(:yellow)}' to see another deck, " +
          "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
          "'#{'exit'.colorize(:yellow)}' to exit."
     puts 'What would you like to do?:'
@@ -164,7 +164,7 @@ class CliController
 
   def self.prompt_and_get_bottom_level_input(deck)
     user_input = ''
-    until valid_bottom_level_choice?(user_input)
+    until valid_bottom_level_choice?(user_input, deck)
       bottom_level_prompt(deck)
 
       user_input = gets.strip.downcase
@@ -177,7 +177,7 @@ class CliController
       .include?(user_input)
   end
 
-  def execute_bottom_level_choice(user_input, deck)
+  def self.execute_bottom_level_choice(user_input, deck)
     case user_input
     when 'back', deck.name
       choose_decklist(deck)

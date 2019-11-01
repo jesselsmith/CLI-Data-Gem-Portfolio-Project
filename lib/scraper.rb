@@ -11,7 +11,7 @@ class Scraper
 
   def self.mana_extractor(html_node)
     html_node.map do |container|
-      container.css('.common-manaCost-manaSymbol').map do |element| 
+      container.css('.common-manaCost-manaSymbol').map do |element|
         mana_symbol = element.attribute('alt').value.upcase
         case mana_symbol
         when 'W'
@@ -91,13 +91,17 @@ class Scraper
   def self.scrape_card_info(card)
     doc = Nokogiri::HTML(URI.open(BASE_URL + card.card_url))
   
-    prices =  doc.css(".price-box-price")
+    paper_price =  doc.css(".price-box-container .price-box.paper .price-box-price")
+    
+    online_price = doc.css("price-box-container .price-box.online .price-box-price")
+
+    binding.pry
 
     price_variation = doc.css('.price-card-statistics-paper .price-card-statistics-table2 .text-right').map(&:text)
 
     card.add_more_info_with_hash(
-      online_price: prices[0].text,
-      paper_price: prices[1].text,
+      online_price: online_price.empty? ? '--' : online_price.text,
+      paper_price: paper_price.empty? ? '--' : paper_price.text,
       daily_change: price_variation[0],
       weekly_change: price_variation[1],
       highest_price: price_variation[2],

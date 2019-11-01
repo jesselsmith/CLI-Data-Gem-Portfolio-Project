@@ -86,7 +86,7 @@ class Card
     end
   end
 
-  def self.price_changes_colorization(price_change_string)
+  def price_changes_colorization(price_change_string)
     price_change_float = price_change_string.to_f
     if price_change_float.positive?
       price_change_string.colorize(:green)
@@ -98,11 +98,11 @@ class Card
   end
 
   def display_detailed_card
-    puts "#{name_in_color}\t#{@mana_cost}"
+    puts "Name: #{name_in_color}\tMana Cost: #{@mana_cost}"
     puts "Image URL: #{@image_url}"
-    puts "Paper Price: #{@paper_price.colorize(:cyan)} | Online Price: #{@online_price.colorize(:cyan)}"
+    puts "Paper Price: $#{@paper_price.colorize(:cyan)} | Online Price: #{@online_price.colorize(:cyan)}tix"
     puts "Daily Change: #{price_changes_colorization(@daily_change)} | Weekly Change: #{price_changes_colorization(@weekly_change)}"
-    puts "Highest Price: #{@highest_price} | Lowest Price: #{@lowest_price}"
+    puts "Highest Price: #{@highest_price.colorize(:cyan)} | Lowest Price: #{@lowest_price.colorize(:cyan)}"
   end
 
 end
