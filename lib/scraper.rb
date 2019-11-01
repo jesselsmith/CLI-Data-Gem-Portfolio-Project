@@ -87,4 +87,17 @@ class Scraper
     end
     deck
   end
+
+  def self.scrape_card_info(card)
+    doc = Nokogiri::HTML(URI.open(BASE_URL + card.card_url))
+  
+    prices =  doc.css(".price-box-price")
+
+    hash_to_add_to_card = {}
+    hash_to_add_to_card[:image_url] = doc.css(".price-card-image-image").attribute("src").value
+    hash_to_add_to_card[:online_price] = prices[0].text
+    hash_to_add_to_card[:paper_price] = prices[1].text
+    hash_to_add_to_card
+  end
+  
 end
