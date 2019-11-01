@@ -9,28 +9,35 @@ class Scraper
     html_node.map { |element| element.text.gsub(/[[:space:]]+/, '') }
   end
 
+  def self.colorize_letter(letter)
+    case letter
+    when 'W'
+      letter.colorize(:light_white)
+    when 'U'
+      letter.colorize(:blue)
+    when 'B'
+      letter.colorize(:light_black)
+    when 'R'
+      letter.colorize(:red)
+    when 'G'
+      letter.colorize(:green)
+    else
+      letter
+    end
+  end
+
   def self.mana_extractor(html_node)
     html_node.map do |container|
       container.css('.common-manaCost-manaSymbol').map do |element|
         mana_symbol = element.attribute('alt').value.upcase
-        case mana_symbol
-        when 'W'
-          mana_symbol.colorize(:light_white)
-        when 'U'
-          mana_symbol.colorize(:blue)
-        when 'B'
-          mana_symbol.colorize(:light_black)
-        when 'R'
-          mana_symbol.colorize(:red)
-        when 'G'
-          mana_symbol.colorize(:green)
+        if mana_symbol.length > 1
+          '(' + mana_symbol.split('').map { |e| colorize_letter(e) }.join('/') + ')'
         else
-          mana_symbol
+          colorize_letter(mana_symbol)
         end
       end.join
     end
   end
-
 
   def self.scrape_top_12_decks(format_url) 
     doc = Nokogiri::HTML(URI.open(BASE_URL + format_url))
@@ -93,9 +100,7 @@ class Scraper
   
     paper_price =  doc.css(".price-box-container .price-box.paper .price-box-price")
     
-    online_price = doc.css("price-box-container .price-box.online .price-box-price")
-
-    binding.pry
+    online_price = doc.css(".price-box-container .price-box.online .price-box-price")
 
     price_variation = doc.css('.price-card-statistics-paper .price-card-statistics-table2 .text-right').map(&:text)
 

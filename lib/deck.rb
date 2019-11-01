@@ -67,7 +67,8 @@ class Deck
   end
 
   def print_deck
-    puts name.colorize(:magenta)
+    puts 'Name: ' + name.colorize(:magenta)
+    puts "#  Card Name"
     @cards.each do |card|
       puts "#{card[1][:quantity]} #{card[1][:card].name_in_color}"
     end
