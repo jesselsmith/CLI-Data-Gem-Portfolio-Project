@@ -6,12 +6,16 @@ class CliController
     puts 'Welcome to ' + 'M:tG Metagame Scraper'.colorize(:light_blue) + '!'
   end
 
-  def self.list_format_selection
-    puts 'Select an option from the list below:'
+  def self.display_format_list
     MTG_FORMAT_LIST.each.with_index(1) do |mtg_format, i|
       puts "#{i.to_s.colorize(:yellow)}. Show me the top 12 " +
            "#{mtg_format.capitalize.colorize(:light_green)} decks."
     end
+  end
+
+  def self.list_format_selection
+    puts 'Select an option from the list below:'
+    display_format_list
     user_input = ''
     until valid_format_selection_choice?(user_input)
       puts 'What would you like to do? [enter ' +
@@ -119,11 +123,11 @@ class CliController
     user_input
   end
 
-  def self.execute_card_selection_choice(user_input, mtg_format, deck)
+  def self.execute_card_selection_choice(user_input, deck)
     if deck.how_many(user_input).positive?
       choose_card(deck.cards[deck.symbolize(user_input)], deck)
     elsif user_input == 'list decks'
-      deck_selection_execution(mtg_format, list_deck_selection(mtg_format))
+      deck_selection_execution(deck.mtg_format, list_deck_selection(deck.mtg_format))
     elsif user_input == 'list formats'
       format_selection_execution(self.list_format_selection)
     elsif user_input == 'exit'
@@ -136,7 +140,7 @@ class CliController
 
     deck.print_deck
 
-    execute_card_selection_choice(prompt_and_get_card_selection_input(deck), deck.mtg_format, deck)
+    execute_card_selection_choice(prompt_and_get_card_selection_input(deck), deck)
   end
 
   def self.choose_card(card, deck)
@@ -147,5 +151,42 @@ class CliController
     user_input = prompt_and_get_bottom_level_input(deck)
 
     execute_bottom_level_choice(user_input, deck)
+  end
+
+  def bottom_level_prompt(deck)
+    puts "Enter '#{'back'.colorize(:yellow)} to go back to the " +
+         "#{deck.name.colorize(:magenta)} decklist, " +
+         "#{'list decks'.colorize(:yellow)}' to see another deck, " +
+         "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
+         "'#{'exit'.colorize(:yellow)}' to exit."
+    puts 'What would you like to do?:'
+  end
+
+  def self.prompt_and_get_bottom_level_input(deck)
+    user_input = ''
+    until valid_bottom_level_choice?(user_input)
+      bottom_level_prompt(deck)
+
+      user_input = gets.strip.downcase
+    end
+    user_input
+  end
+
+  def self.valid_bottom_level_choice?(user_input, deck)
+    ['back', deck.name, 'list decks', 'list formats', 'exit']
+      .include?(user_input)
+  end
+
+  def execute_bottom_level_choice(user_input, deck)
+    case user_input
+    when 'back', deck.name
+      choose_decklist(deck)
+    when 'list decks'
+      deck_selection_execution(deck.mtg_format, list_deck_selection(deck.mtg_format))
+    when 'list formats'
+      format_selection_execution(self.list_format_selection)
+    when 'exit'
+      goodbye
+    end
   end
 end

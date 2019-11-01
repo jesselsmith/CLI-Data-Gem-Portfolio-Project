@@ -85,4 +85,24 @@ class Card
       end
     end
   end
+
+  def self.price_changes_colorization(price_change_string)
+    price_change_float = price_change_string.to_f
+    if price_change_float.positive?
+      price_change_string.colorize(:green)
+    elsif price_change_float.zero?
+      price_change_string.colorize(:light_black)
+    else
+      price_change_string.colorize(:red)
+    end
+  end
+
+  def display_detailed_card
+    puts "#{name_in_color}\t#{@mana_cost}"
+    puts "Image URL: #{@image_url}"
+    puts "Paper Price: #{@paper_price.colorize(:cyan)} | Online Price: #{@online_price.colorize(:cyan)}"
+    puts "Daily Change: #{price_changes_colorization(@daily_change)} | Weekly Change: #{price_changes_colorization(@weekly_change)}"
+    puts "Highest Price: #{@highest_price} | Lowest Price: #{@lowest_price}"
+  end
+
 end
