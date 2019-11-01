@@ -58,7 +58,7 @@ class Deck
     @cards.nil? ? false : @cards.key?(symbolize(card_object.name))
   end
 
-  def how_many?(card_name_string)
+  def how_many(card_name_string)
     if @cards.nil? || @cards[symbolize(card_name_string)].nil?
       0
     else

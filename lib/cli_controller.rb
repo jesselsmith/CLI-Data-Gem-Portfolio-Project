@@ -102,7 +102,7 @@ class CliController
 
   def self.valid_card_selection_choice?(user_input_string, deck)
     ['list decks', 'list formats', 'exit'].include?(user_input_string) ||
-      deck.card?(user_input_string)
+      deck.how_many(user_input_string).positive?
   end
 
   def self.prompt_and_get_card_selection_input(deck)
@@ -120,8 +120,8 @@ class CliController
   end
 
   def self.execute_card_selection_choice(user_input, mtg_format, deck)
-    if deck.card?(user_input)
-      choose_card(deck.cards[Card.symbolize(user_input)])
+    if deck.how_many(user_input).positive?
+      choose_card(deck.cards[deck.symbolize(user_input)], deck)
     elsif user_input == 'list decks'
       deck_selection_execution(mtg_format, list_deck_selection(mtg_format))
     elsif user_input == 'list formats'
@@ -139,6 +139,13 @@ class CliController
     execute_card_selection_choice(prompt_and_get_card_selection_input(deck), deck.mtg_format, deck)
   end
 
-  def self.choose_card()
+  def self.choose_card(card, deck)
+    Scraper.scrape_card_info(card) if card.online_price.nil?
+
+    card.display_detailed_card
+
+    user_input = prompt_and_get_bottom_level_input(deck)
+
+    execute_bottom_level_choice(user_input, deck)
   end
 end
