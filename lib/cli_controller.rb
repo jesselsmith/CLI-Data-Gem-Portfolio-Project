@@ -155,7 +155,7 @@ class CliController
   end
 
   def self.bottom_level_prompt(deck)
-    puts "Enter '#{'back'.colorize(:yellow)} to go back to the " +
+    puts "Enter '#{'back'.colorize(:yellow)}' to go back to the " +
          "#{deck.name.colorize(:magenta)} decklist, " +
          "'#{'list decks'.colorize(:yellow)}' to see another deck,\n" +
          "'#{'list formats'.colorize(:yellow)}' to see another format, or " +
